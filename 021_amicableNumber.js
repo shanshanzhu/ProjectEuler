@@ -21,14 +21,15 @@ var getDivisorSum = function(n) {
 var getAmicableNumber = function (n) {
   if (typeof n !== 'number' || n <= 1) return 0;
   var counted = {}, total = 0, sum, amicalSum;
-  for (var i = 2; i < n && !counted[i]; i ++) {
+  for (var i = 2; i < n; i ++) {
+    if (counted[i]) continue;
     sum = getDivisorSum(i);
-    if (sum < n && getDivisorSum(sum) === i && sum !==i) {
-      counted[sum] = true;
-      counted[i] = true;
+    counted[i] = true;
+    counted[sum] = true;
+    if (sum < n && sum !==i && getDivisorSum(sum) === i) {
       total += i;
       total += sum;
-      console.log(sum, i);
+      console.log(i, sum)
     }
   }
   return total;
